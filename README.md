@@ -1,5 +1,5 @@
 # INF632 - Wearable Computing
-The following is repo has the Octave and Arduino code developed for an informatics course in wearable computing.
+The following repo has the Octave and Arduino code developed for an informatics course in wearable computing.
 
 ## Hw 2
 Some basic statistic functions.
