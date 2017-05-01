@@ -2,6 +2,7 @@
 #include <Wire.h> // I2C library included for SparkFunLSM9DS1
 #include <SparkFunLSM9DS1.h> // SparkFun LSM9DS1 library
 #include <SparkFunDS3234RTC.h> //SparkFun DS3234RTC library
+#include <LiquidCrystal_I2C.h>
 
 #define DS13074_CS_PIN 10
 
@@ -15,8 +16,10 @@ LSM9DS1 imu;
 int GAS_SENSOR_PIN = 0;
 int gas_value;
 
-void setup() {
+LiquidCrystal_I2C lcd(0x27, 16, 2); // set the LCD address to 0x27 for a 16 chars and 2 line display
 
+void setup() {
+  
   // Set serial baud rate
   Serial.begin(9600);
 
@@ -35,6 +38,10 @@ void setup() {
   // Initialization of RTC
   rtc.begin(DS13074_CS_PIN);
 
+  // Initilize LCD 
+  lcd.init();  //initialize the lcd
+  lcd.backlight();  //open the backlight
+  
   delay(2000);                  // waits two seconds
 
   // Write headers to SD
@@ -48,7 +55,7 @@ void loop() {
   // Get voltage reading from gas sensor
   gas_value = analogRead(GAS_SENSOR_PIN);
   // Map voltage value into range between 0-10
-  gas_value = map(gas_value, 500, 1023, 0, 10);
+  //int new_gas_value = map(gas_value, 500, 1023, 0, 10);
   //Print values to tx (i.e. save to SD)
   Serial.print(gas_value);
 
@@ -86,4 +93,9 @@ void loop() {
   Serial.print(imu.calcGyro(imu.gz)); // Print z-axis rotation in DPS
   Serial.print(" , ");
 
+  lcd.setCursor(3, 0); // set the cursor to column 2, line 1
+  lcd.print(gas_value);  // Print a message to the LCD.
+
+  lcd.setCursor(2, 1); // set the cursor to column 2, line 1
+  lcd.print("It's lit fam" );  // Print a message to the LCD.
 }
