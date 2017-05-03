@@ -7,22 +7,21 @@ function [ test_set ] = knn( a_x, a_y, b_x , b_y, test_set)
   % add in another classification (start with 0)
   % same for b_x and b_y (including the classification of 1)
   % this will result in a big martix with [a_x, a_y, zeros; b_x, b_y, ones;]
-  train_set = [a_x, a_y, ones( size(a_x,1) , 1) ; b_x, b_y, 2*ones( size (b_x,1), 1) ];
+  train_set = [a_x, a_y, zeros( size(a_x,1) , 1) ; b_x, b_y, ones( size (b_x,1), 1) ];
 
   % make a set of x and y of unclassified data
   % use min(a_x & b_x), max(a_x & b_x), mins(y's), max(y's) =  matrix ...
   % of possible points to consider
-  test_set = zeros(100,100);
-
+  %test_set = zeros(100,100);
   % ==== Find it's K NN ====
   % can create a set of k's
 
   % set k
-  k = 11;
+  k = 5;
 
   % Loop through each point in the test set
-  for x = 1:100
-    for y = 1:100
+  for x = 1:size(test_set)(2)
+    for y = 1:size(test_set)(1)
       % Grab single point
       this_xy = [x,y];
 
