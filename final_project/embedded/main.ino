@@ -51,6 +51,8 @@ void setup() {
 
 void loop() {
 
+  delay(5000);                  // waits five seconds
+
   /** Read sensor values **/
   // Get voltage reading from gas sensor
   gas_value = analogRead(GAS_SENSOR_PIN);
@@ -58,6 +60,7 @@ void loop() {
   //int new_gas_value = map(gas_value, 500, 1023, 0, 10);
   //Print values to tx (i.e. save to SD)
   Serial.print(gas_value);
+  Serial.print(",");
 
   // ** RTC
   rtc.update(); // Update RTC data
@@ -71,7 +74,6 @@ void loop() {
   Serial.print(m);
   Serial.print(" , ");
   Serial.print(h);
-  Serial.println(" ");
 
   // ** Accel
   imu.readAccel(); // Update the accelerometer data
@@ -91,12 +93,13 @@ void loop() {
   Serial.print(imu.calcGyro(imu.gy)); // Print y-axis rotation in DPS
   Serial.print(" , ");
   Serial.print(imu.calcGyro(imu.gz)); // Print z-axis rotation in DPS
-  Serial.print(" , ");
+  Serial.println(" ");
 
   lcd.setCursor(3, 0); // set the cursor to column 2, line 1
   lcd.print(gas_value);  // Print a message to the LCD.
 
+
   lcd.setCursor(2, 1); // set the cursor to column 2, line 1
   lcd.print(h + ":" + m + ":" + s);  // Print a message to the LCD.
-  
+
 }
